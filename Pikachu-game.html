@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Objects</title>
+</head>
+
+<body>
+    <div id="game"></div>
+    <script>
+
+class Hero {
+    constructor(image, top, left, size) {
+        this.image = image;
+        this.top = top;
+        this.left = left;
+        this.size = size;
+        this.distance = 50;
+
+        this.getHeroElement = function () {
+            return '<img width="' + this.size + '"' +
+                ' height="' + this.size + '"' +
+                ' src="' + this.image + '"' +
+                ' style="top: ' + this.top + 'px; left:' + this.left + 'px;position:absolute;" />';
+        };
+
+        this.moveRight = function () {
+            this.left += this.distance;
+
+        };
+        this.moveBelow = function () {
+            this.top += this.distance;
+
+        };
+        this.moveLeft = function () {
+            this.left -= this.distance;
+
+        };
+        this.moveTop = function () {
+            this.top -= this.distance;
+
+        };
+    }
+}
+
+var hero = new Hero('https://img.rankedboost.com/wp-content/plugins/super-smash-bros-ultimate/assets/character-images-main/Pikachu_SSBU.png', 0, 0, 200);
+const limitWidth = window.innerWidth - hero.size;
+const limitHeight = window.innerHeight - hero.size;
+
+function start() {
+
+    if (hero.left < limitWidth && hero.top === 0) {
+        hero.moveRight();
+    }
+
+    if (hero.left >= limitWidth && hero.top < limitHeight) {
+        hero.moveBelow();
+    }
+
+    if (hero.left > 0 && hero.top >= limitHeight) {
+        hero.moveLeft();
+    }
+
+    if (hero.left <= 0 && hero.top >= 0) {
+        hero.moveTop();
+    }
+
+
+        document.getElementById('game').innerHTML = hero.getHeroElement();
+        setTimeout(start, 70);
+
+}
+
+start();
+    </script>
+</body>
+
+</html>
